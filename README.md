@@ -10,7 +10,7 @@
 This is an example vendor extension for a fictional company "Remote Data". It is used in some of the examples provided in the STAC spec.
 
 Remote Data wants to use STAC for their satellite and airborne data, but have additional fields they would want their STAC Items to include.
-To allow the new fields to be propertly documented and validated, Remote Data creates a STAC Extension to store these additional fields, following
+To allow the new fields to be properly documented and validated, Remote Data creates a STAC Extension to store these additional fields, following
 the process for creating any other extension. A README (this file) to describe the purpose and fields, example metadata, and a JSON Schema.
 
 - Examples:
