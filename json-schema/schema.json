@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/template/v1.0.0/schema.json#",
-  "title": "Template Extension",
-  "description": "STAC Template Extension for STAC Items and STAC Collections.",
+  "$id": "https://stac-extensions.github.io/remote-data/v1.0.0/schema.json",
+  "title": "Remote Data (Example) Extension",
+  "description": "STAC Example Extension for ficional vendor Remote Data",
   "oneOf": [
     {
       "$comment": "This is the schema for STAC Items.",
@@ -21,9 +21,11 @@
             "properties": {
               "allOf": [
                 {
-                  "$comment": "Require fields here for item properties.",
+                  "$comment": "Required fields here for item properties.",
                   "required": [
-                    "template:new_field"
+                    "rd:type",
+                    "rd:product_level",
+                    "rd:sat_id"
                   ]
                 },
                 {
@@ -50,7 +52,8 @@
         {
           "type": "object",
           "required": [
-            "type"
+            "type",
+            "rd:visibility"
           ],
           "properties": {
             "type": {
@@ -75,7 +78,7 @@
           "$ref": "#/definitions/stac_extensions"
         },
         {
-          "$ref": "#/definitions/fields"
+          "$ref": "#/definitions/collection_fields"
         }
       ]
     }
@@ -90,8 +93,20 @@
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+            "const": "https://stac-extensions.github.io/remote-data/v1.0.0/schema.json"
           }
+        }
+      }
+    },
+    "collection_fields": {
+      "properties": {
+        "rd:visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "protected",
+            "private"
+          ]
         }
       }
     },
@@ -99,38 +114,51 @@
       "$comment": "Add your new fields here. Don't require them here, do that above in the item schema.",
       "type": "object",
       "properties": {
-        "template:new_field": {
-          "type": "string"
+        "rd:type": {
+          "type": "string",
+          "enum": [
+            "scene"
+          ]
         },
-        "template:xyz": {
-          "type": "object",
-          "required": [
-            "x",
-            "y",
-            "z"
-          ],
-          "properties": {
-            "x": {
-              "type": "number"
-            },
-            "y": {
-              "type": "number"
-            },
-            "z": {
-              "type": "number"
-            }
-          }
+        "rd:product_level": {
+          "type": "string",
+          "enum": [
+            "LV1A",
+            "LV1B",
+            "LV2A",
+            "LV2B",
+            "LV3A",
+            "LV3B"
+          ]
         }, 
-        "template:another_one": {
+        "rd:runs": {
+          "type": "array", 
+          "items": {
+            "type": "string"
+          }
+        },
+        "rd:parsecs": {
           "type": "array", 
           "items": {
             "type": "number"
           }
+        },
+        "rd:anomalous_pixels": {
+          "type": "number"
+        },
+        "rd:sat_id": {
+          "type": "string"
+        },
+        "rd:earth_sun_distance": {
+          "type": "number"
+        },
+        "rd:flux_capacitor": {
+          "type": "boolean"
         }
       },
       "patternProperties": {
-        "^(?!template:)": {
-          "$comment": "Above, change `template` to the prefix of this extension"
+        "^(?!rd:)": {
+          "$comment": "Disallow other fields with rd: prefix"
         }
       },
       "additionalProperties": false
