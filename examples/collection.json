@@ -1,14 +1,12 @@
 {
   "stac_version": "1.0.0-rc.1",
   "stac_extensions": [
-    "collection-assets",
-    "item-assets",
-    "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/remote-data/v1.0.0/schema.json"
   ],
   "type": "Collection",
-  "id": "collection",
-  "title": "A title",
-  "description": "A description",
+  "id": "cool-collection",
+  "title": "Cool Sat data",
+  "description": "A Collection containing data from the coolest of satellites",
   "license": "Apache-2.0",
   "extent": {
     "spatial": {
@@ -30,28 +28,7 @@
       ]
     }
   },
-  "template:new_field": "test",
-  "template:xyz": {
-    "x": 1,
-    "y": 2,
-    "z": 3
-  },
-  "template:another_one": [
-    1,
-    2,
-    3
-  ],
-  "assets": {
-    "example": {
-      "href": "https://example.com/examples/file.xyz",
-      "template:new_field": "test"
-    }
-  },
-  "item_assets": {
-    "data": {
-      "template:new_field": "test"
-    }
-  },
+  "rd:visibility": "public",
   "summaries": {
     "datetime": {
       "minimum": "2015-06-23T00:00:00Z",
@@ -60,11 +37,11 @@
   },
   "links": [
     {
-      "href": "https://example.com/examples/collection.json",
+      "href": "https://remotedata.io/stac/collection.json",
       "rel": "self"
     },
     {
-      "href": "https://example.com/examples/item.json",
+      "href": "https://remotedata.io/stac/item.json",
       "rel": "item"
     }
   ]
