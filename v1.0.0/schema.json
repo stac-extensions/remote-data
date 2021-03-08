@@ -1,0 +1,167 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stac-extensions.github.io/remote-data/v1.0.0/schema.json",
+  "title": "Remote Data (Example) Extension",
+  "description": "STAC Example Extension for fictional vendor Remote Data",
+  "oneOf": [
+    {
+      "$comment": "This is the schema for STAC Items.",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "properties",
+            "assets"
+          ],
+          "properties": {
+            "type": {
+              "const": "Feature"
+            },
+            "properties": {
+              "allOf": [
+                {
+                  "$comment": "Required fields here for item properties.",
+                  "required": [
+                    "rd:type",
+                    "rd:product_level",
+                    "rd:sat_id"
+                  ]
+                },
+                {
+                  "$ref": "#/definitions/fields"
+                }
+              ]
+            },
+            "assets": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fields"
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/stac_extensions"
+        }
+      ]
+    },
+    {
+      "$comment": "This is the schema for STAC Collections.",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "rd:visibility"
+          ],
+          "properties": {
+            "type": {
+              "const": "Collection"
+            },
+            "assets": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fields"
+              }
+            },
+            "item_assets": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fields"
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Remove this and the following object if this is not an extension to a Collection.",
+          "$ref": "#/definitions/stac_extensions"
+        },
+        {
+          "$ref": "#/definitions/collection_fields"
+        }
+      ]
+    }
+  ],
+  "definitions": {
+    "stac_extensions": {
+      "type": "object",
+      "required": [
+        "stac_extensions"
+      ],
+      "properties": {
+        "stac_extensions": {
+          "type": "array",
+          "contains": {
+            "const": "https://stac-extensions.github.io/remote-data/v1.0.0/schema.json"
+          }
+        }
+      }
+    },
+    "collection_fields": {
+      "properties": {
+        "rd:visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "protected",
+            "private"
+          ]
+        }
+      }
+    },
+    "fields": {
+      "$comment": "Remote Data fictional fields.",
+      "type": "object",
+      "properties": {
+        "rd:type": {
+          "type": "string",
+          "enum": [
+            "scene"
+          ]
+        },
+        "rd:product_level": {
+          "type": "string",
+          "enum": [
+            "LV1A",
+            "LV1B",
+            "LV2A",
+            "LV2B",
+            "LV3A",
+            "LV3B"
+          ]
+        }, 
+        "rd:runs": {
+          "type": "array", 
+          "items": {
+            "type": "string"
+          }
+        },
+        "rd:parsecs": {
+          "type": "array", 
+          "items": {
+            "type": "number"
+          }
+        },
+        "rd:anomalous_pixels": {
+          "type": "number"
+        },
+        "rd:sat_id": {
+          "type": "string"
+        },
+        "rd:earth_sun_distance": {
+          "type": "number"
+        },
+        "rd:flux_capacitor": {
+          "type": "boolean"
+        }
+      },
+      "patternProperties": {
+        "^(?!rd:)": {
+          "$comment": "Disallow other fields with rd: prefix"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
