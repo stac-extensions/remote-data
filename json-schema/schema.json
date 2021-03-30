@@ -108,7 +108,13 @@
             "private"
           ]
         }
-      }
+      },
+      "patternProperties": {
+        "^(?!rd:)": {
+          "$comment": "Disallow other fields with rd: prefix"
+        }
+      },
+      "additionalProperties": false
     },
     "fields": {
       "$comment": "Remote Data fictional fields.",
